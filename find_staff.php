@@ -85,7 +85,8 @@ foreach ( $techs as $technician => $tech ) {
     $getcmd = "snmpget -v3 -u snmpuser -A snmppassword -l authNoPriv -a MD5 ruc.kus.ip  " . $clientoid;
     $clientip = shell_exec($getcmd);
     $clientip = get_string_between($clientip, "IpAddress: ", "\n");
-    $clientnet = get_string_between($clientip,".", ".");
+    //get the 2nd octet of their IP address, modify this if your ip schema is different
+    $clientnet = get_string_between($clientip,"10.", ".");
     ${$technician}['Site'] = $sites[$clientnet];
     ${$technician}['Time'] = date("g:ia M d");
   } else {}
