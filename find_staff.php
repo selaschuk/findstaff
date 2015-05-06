@@ -46,12 +46,13 @@ foreach ($trs as $tr) {
 
 $allmacs = "";
 foreach ( $techs as $tech ) {
-  $allmacs = $allmacs . "\"" .$tech['MAC'] . "\"" . "\|"; }
+  $allmacs = $allmacs . "\"" .$tech['MAC'] . "\"" . "\|";
+}
+$allmacs = rtrim($allmacs, "|");
 
 //query the controller and only grab entries we're interested in
 //use proper SNMP credentials
 
-$allmacs = rtrim($allmacs, "|");
 $oidcmd = "snmpwalk -v3 -u snmpuser -A snmppassword -l authNoPriv -a MD5 ruc.kus.ip  1.3.6.1.4.1.25053.1.2.2.1.1.3.1.1.1 |grep -E $allmacs"; $oidlist = shell_exec($oidcmd);
 
 //turn on output buffering to start building our HTML
@@ -65,7 +66,6 @@ In Out Board
 <body>
 <table style=\"width:100%;text-align:center;font-size:300%\">
 <tr><th>Name</th><th>Site</th><th>Last Seen</th></tr> ";
-
 
 //start working through every tech in the list
 foreach ( $techs as $technician => $tech ) {
